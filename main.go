@@ -1,8 +1,10 @@
 package main
 
 import (
+	"level-travel/controllers"
 	"log"
 	"net/http"
+	"time"
 )
 
 const (
@@ -11,18 +13,17 @@ const (
 
 func main() {
 	mux := http.DefaultServeMux
-	mux.HandleFunc("/", index)
+	mux.HandleFunc("/", controllers.Index)
 
 	srv := &http.Server{
 		Addr:    port,
 		Handler: mux,
 	}
 
-	if err := srv.ListenAndServe(); err != nil {
+	go func() {
+		err := srv.ListenAndServe()
 		log.Fatal(err)
-	}
-}
+	}()
 
-func index(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(418)
+	controllers.UpdateLibrariesData(time.Hour * 24)
 }
