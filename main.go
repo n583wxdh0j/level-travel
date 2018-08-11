@@ -14,16 +14,15 @@ const (
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", controllers.Index)
-
 	srv := &http.Server{
 		Addr:    port,
 		Handler: mux,
 	}
-
 	go func() {
 		err := srv.ListenAndServe()
 		log.Fatal(err)
 	}()
+	time.Sleep(time.Nanosecond)
 
-	controllers.UpdateLibrariesData(time.Hour * 24)
+	// controllers.UpdateLibrariesData(time.Hour * 24)
 }

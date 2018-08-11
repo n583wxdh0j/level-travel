@@ -1,9 +1,30 @@
 package models
 
 import (
-	"database/sql"
 	"time"
 )
+
+type Librarieser interface {
+	Has() bool
+}
+
+type Libraries []Library
+
+type Library struct {
+	ID             int
+	Repo           string
+	Owner          string
+	Link           string
+	Stars          int
+	LastCommitDate time.Time
+	Followers      int
+	Description    string
+	LastUpdate     time.Time
+}
+
+func (libs *Libraries) Has() bool {
+	return len(*libs) == 0
+}
 
 type Config struct {
 	Database struct {
@@ -12,32 +33,4 @@ type Config struct {
 		SSLMode string
 	}
 	GithubAPIKey string
-}
-
-type LibrariesDTO []LibraryDTO
-
-type LibraryDTO struct {
-	ID             sql.NullInt64
-	Name           sql.NullString
-	Link           sql.NullString
-	Stars          sql.NullInt64
-	LastCommitDate sql.NullString
-	Followers      sql.NullInt64
-	Description    sql.NullString
-}
-
-type Libraries []Library
-
-type Library struct {
-	ID             int
-	Name           string
-	Link           string
-	Stars          int
-	LastCommitDate time.Time
-	Followers      int
-	Description    string
-}
-
-func (libs *Libraries) Has() bool {
-	return len(*libs) == 0
 }

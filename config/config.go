@@ -1,6 +1,8 @@
 package config
 
-import "level-travel/models"
+import (
+	"level-travel/models"
+)
 
 var Config models.Config
 
